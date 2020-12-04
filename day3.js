@@ -1,6 +1,6 @@
-const { readInput } = require('./readfile');
+const { readLines } = require('./readfile');
 
-const input = readInput('day3Input.txt');
+const input = readLines('day3Input.txt');
 
 const countTreesEncountered = (input, slope) => {
     const length = input[0].length;
