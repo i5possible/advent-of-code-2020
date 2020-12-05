@@ -18,8 +18,6 @@ const countTreesEncountered = (input, slope) => {
     return count;
 }
 
-const 
-
 // question 1
 console.log(countTreesEncountered(input, [3, 1]))
 
