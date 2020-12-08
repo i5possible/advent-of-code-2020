@@ -11,6 +11,5 @@ const lines = input.split(//);
 EOF)\"" > day${Day}.js
 
 eval "echo \"$(cat << EOF
-
 EOF)\"" > day${Day}Input.txt
 
