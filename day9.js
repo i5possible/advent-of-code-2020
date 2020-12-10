@@ -3,9 +3,8 @@ const { readData } = require('./readfile');
 // let n = 5;
 // 127
 const input = readData('day9Input.txt');
-const lines = input.split(/\n/).map(x => parseInt(x));
-
 let n = 25;
+const lines = input.split(/\n/).map(x => parseInt(x));
 
 // console.log(lines);
 
@@ -46,18 +45,22 @@ const findInvalid = () => {
 // findInvalid();
 
 let invalid = 144381670;
+// let invalid = 127;
 let i = 0, j = 1;
 let sum = lines[i] + lines[j];
-while(j < lines.length) {
-    console.log(lines[i], lines[j], sum)
+while(j < lines.length && i < j && sum != invalid) {
+    // console.log(i, lines[i], j,  lines[j], sum)
     if (sum < invalid) {
         ++j;
         sum = sum + lines[j];
     } else if (sum > invalid) {
-        ++i;
         sum = sum - lines[i];
-    } else {
-        console.log(lines[i] + lines[j])
+        ++i;
     }
 }
+// console.log(i, lines[i], j,  lines[j], sum)
 
+const sorted = lines.slice(i, j+1).sort((a, b) => a-b);
+// console.log(sorted)
+console.log(sorted.shift()+sorted.pop())
+// 20532569
