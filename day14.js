@@ -21,6 +21,14 @@ const maskNumber1And0 = (number, mask1, mask0) => {
     return res;
 }
 
+const maskNumber1s = (number, mask1) => {
+    let res = number;
+    for (let i = 0; i < mask1.length; i++) {
+        res = maskNumber1(res, mask1[i]);
+    }
+    return res;
+}
+
 const sumMasked = lines => {
     let mask1, mask0;
     for (let i = 0; i < lines.length; i++) {
@@ -110,4 +118,58 @@ const sumMasked = lines => {
 // num = 356438366
 // maskNumber1And0(num, mask1, mask0)
 
-console.log(sumMasked(lines));
+// console.log(sumMasked(lines));
+
+const getAddresses = (address, masks) => {
+    let addresses = [address];
+    // console.log(`maskX's number: ${masks.length}`);
+    for (let i = 0; i < masks.length; i++) {
+        const len = addresses.length;
+        for (let j = 0; j < len; j++) {
+            const cur = addresses.shift();
+            addresses.push(maskNumber0(cur, masks[i]));
+            addresses.push(maskNumber1(cur, masks[i]));
+        }
+    }
+    return addresses;
+}
+
+const sumDecoded = lines => {
+    let mask1, maskX;
+    let sum = 0;
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (line[0] === "mask") {
+            let m = line[1];
+            mask1 = [];
+            maskX = [];
+            for (let j = 0; j < m.length; j++) {
+                if(m[j] === '1') {
+                    mask1.push(m.length-j-1);
+                } else if(m[j] === 'X') {
+                    maskX.push(m.length-j-1);
+                }
+            }
+            // console.log(mask1, maskX);
+            continue;
+        }
+        const value = parseInt(line[1])
+        const index = parseInt(/\[(.+)\]/g.exec(line[0])[1]);
+        const maskedAddress = maskNumber1s(index, mask1);
+        const addresses = getAddresses(maskedAddress, maskX);
+        // console.log("mem", value, index, maskedAddress, addresses);
+        // console.log(value, addresses.length, maskX.length)
+        // sum += addresses.length * value;
+        addresses.forEach(address => {
+            operations[address] = value;
+        })
+    }
+    // console.log(sum);
+
+    // console.log(JSON.stringify(Object.values(operations)))
+    const res = Object.values(operations).reduce((acc, cur) => acc + cur, 0)
+    console.log(res);
+    return res;
+}
+
+sumDecoded(lines)
