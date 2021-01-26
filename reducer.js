@@ -1,6 +1,8 @@
 const arrayReducer = (acc, cur) => [...acc, ...cur];
 
-modules.export = {
-  arrayReducer
-}
+const addReducer = (acc, cur) => acc + cur;
 
+module.exports = {
+  addReducer,
+  arrayReducer,
+};
