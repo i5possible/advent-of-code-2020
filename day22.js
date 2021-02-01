@@ -45,27 +45,19 @@ const playGame1 = (player1, player2) => {
 // playGame1(player1, player2);
 
 const playGame2 = (player1, player2, rootLevel) => {
-  console.log("##########");
-  //   console.log(player1);
-  //   console.log(player2);
+  //   console.log("##########");
   const played = [];
   while (player1.length !== 0 && player2.length !== 0) {
-    console.log("------------");
-    console.log(player1);
-    console.log(player2);
-    if (
-      played.find(
-        (game) =>
-          _.xor(game[0], player1).length === 0 &&
-          _.xor(game[1], player2).length === 0
-      )
-    ) {
+    // console.log("------------");
+    // console.log(player1);
+    // console.log(player2);
+    if (played.includes([player1.join(","), player2.join(",")].join("-"))) {
       if (rootLevel) {
         getWinnerScore(player1, player2);
       }
       return true;
     }
-    played.push([[...player1], [...player2]]);
+    played.push([player1.join(","), player2.join(",")].join("-"));
     const card1 = player1.pop();
     const card2 = player2.pop();
     let isPlayer1Win;
